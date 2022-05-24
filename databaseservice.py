@@ -4,9 +4,11 @@ import sys
 from model.Customer import Customer
 from model.Restaurant import Restaurant
 
+database_prod = "database/database.sqlite"
+database_dev = "database/database.sqlite"
 
 def update_restaurant_info(restaurant):
-    connection = sqlite3.connect("database/database_dev.sqlite")
+    connection = sqlite3.connect(database_prod)
     cursor = connection.cursor()
     try:
         # connection = sqlite3.connect("database/database_dev.sqlite")
@@ -36,7 +38,7 @@ def update_restaurant_info(restaurant):
 
 
 def get_customer_info_by_hooli_number(hooli_number):
-    connection = sqlite3.connect("database/database_dev.sqlite")
+    connection = sqlite3.connect(database_prod)
     customer_data = None
     try:
         # connection = sqlite3.connect("database/database_dev.sqlite")
@@ -60,7 +62,7 @@ def get_customer_info_by_hooli_number(hooli_number):
 
 
 def get_restaurant_info_by_hooli_number(hooli_number):
-    connection = sqlite3.connect("database/database_dev.sqlite")
+    connection = sqlite3.connect(database_prod)
     restaurant_data = None
     try:
         # connection = sqlite3.connect("database/database_dev.sqlite")
@@ -82,7 +84,7 @@ def get_restaurant_info_by_hooli_number(hooli_number):
 
 
 def get_restaurant_info_by_id(id):
-    connection = sqlite3.connect("database/database_dev.sqlite")
+    connection = sqlite3.connect(database_prod)
     restaurant_data = None
     try:
         # connection = sqlite3.connect("database/database_dev.sqlite")

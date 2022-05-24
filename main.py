@@ -84,14 +84,17 @@ def update_restaurant(restaurant_id):
     """
     try:
         request_body = json.loads(request.data)
-        restaurant_details = Restaurant(None)
-        restaurant_details.set_id(restaurant_id)
-        restaurant_details.set_name(request_body["name"])
-        restaurant_details.set_hooli_number(request_body["hooli_number"])
+        existing_record = get_restaurant_info_by_id(restaurant_id)
+
+        if existing_record.get_id() is None:
+            return "Restaurant Id: {id} does not exist.".format(id=restaurant_id),400
+
+        existing_record.set_name(request_body["name"])
+        existing_record.set_hooli_number(request_body["hooli_number"])
 
         print("Updating restaurant details...", file=sys.stderr)
 
-        affected_rows = update_restaurant_info(restaurant_details)
+        affected_rows = update_restaurant_info(existing_record)
 
         print("Done updating restaurant details.", file=sys.stderr)
         print("Affected rows: {row}".format(row=affected_rows), file=sys.stderr)
@@ -122,6 +125,10 @@ def test_update_restaurant(id):
     """
     try:
         restaurant_data = get_restaurant_info_by_id(id)
+
+        if restaurant_data.get_id() is None:
+            return "Restaurant Id: {id} does not exist.".format(id=id),400
+
         return restaurant_data.to_string(), 200
 
     except Exception:

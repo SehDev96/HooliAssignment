@@ -75,7 +75,7 @@ def message_hooli():
             return "Internal Server Error", 500
 
     else:
-        return 'Content-Type not supported'
+        return 'Content-Type not supported.'
 
 
 @app.route('/v1/restaurant/<restaurant_id>', methods=["PUT"])

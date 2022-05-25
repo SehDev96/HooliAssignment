@@ -22,7 +22,7 @@ limiter = Limiter(app, key_func=get_remote_address)
 
 @app.route("/")
 def index():
-    return "Hello World"
+    return "Please visit https://github.com/SehDev96/HooliAssignment for more info"
 
 
 @app.route('/v1/hooli/message/', methods=['POST'])
@@ -44,15 +44,21 @@ def message_hooli():
     """
     if request.headers.get('Content-Type') == 'application/json':
         try:
-            print(json.loads(request.data), file=sys.stderr)
             request_body = HooliRequestBody(json.loads(request.data))
+
             customer_data = get_customer_info_by_hooli_number(request_body.sender)
             restaurant_data = get_restaurant_info_by_hooli_number(request_body.receiver)
+
+            if customer_data.get_id() is None or restaurant_data.get_id() is None:
+                return "Please check receiver or sender number", 400
+
             channel = customer_data.get_id() + "_" + restaurant_data.get_id()
             message = request_body.message
-            print("Before prediction", file=sys.stderr)
+
+            print("Making api call...", file=sys.stderr)
             api_prediction = get_prediction_reply(channel, message, restaurant_data, customer_data)
-            print("After prediction", file=sys.stderr)
+            print("Api call status code: {code}".format(code=api_prediction.status_code), file=sys.stderr)
+
             if api_prediction.status_code == 200:
                 return api_prediction.json(), api_prediction.status_code
             else:
@@ -84,6 +90,7 @@ def update_restaurant(restaurant_id):
     """
     try:
         request_body = json.loads(request.data)
+
         existing_record = get_restaurant_info_by_id(restaurant_id)
 
         if existing_record.get_id() is None:
@@ -96,7 +103,6 @@ def update_restaurant(restaurant_id):
 
         affected_rows = update_restaurant_info(existing_record)
 
-        print("Done updating restaurant details.", file=sys.stderr)
         print("Affected rows: {row}".format(row=affected_rows), file=sys.stderr)
 
         if affected_rows > 0:

@@ -56,7 +56,9 @@ def message_hooli():
             message = request_body.message
 
             print("Making api call...", file=sys.stderr)
+
             api_prediction = get_prediction_reply(channel, message, restaurant_data, customer_data)
+
             print("Api call status code: {code}".format(code=api_prediction.status_code), file=sys.stderr)
 
             if api_prediction.status_code == 200:

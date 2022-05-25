@@ -23,6 +23,9 @@ Use the container's endpoint given in the command line
 - The request body should be sent in raw JSON format
 - It returns the AI predicted reply
 
+![image](https://user-images.githubusercontent.com/97646744/170160290-5f76ae95-d056-44ee-bd02-fac72eeead3c.png)
+
+
 
 #### 2. /v1/restaurant/{restaurant-id} 
 
@@ -31,8 +34,14 @@ Use the container's endpoint given in the command line
 - It takes the following request body: 
 -  {"name":"","hooli_number":""}
 
+![image](https://user-images.githubusercontent.com/97646744/170160359-0b322cd9-37e3-4781-8c80-f75a03766e84.png)
+
+
 
 #### 3. /v1/restaurant/{restaurant-id}
 - This endpoint is a GET request 
 - It returns restaurant record based on id 
 - This endpoint is created to test the execution of "/v1/restaurant/{restaurant-id}" (PUT)  endpoint
+
+![image](https://user-images.githubusercontent.com/97646744/170160415-6c4dc81c-537d-4a7d-b1fc-6a26d2b4d3e4.png)
+
